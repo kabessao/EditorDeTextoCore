@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EditorDeTextoXaml"
         mc:Ignorable="d"
-        Title="MainWindow" SizeToContent="WidthAndHeight">
+         SizeToContent="WidthAndHeight">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu>
-            <MenuItem Header="Arquivo"></MenuItem>
+            <MenuItem Header="Arquivo">
+                <MenuItem Header="Salvar" Click="Salvar"/>
+            </MenuItem>
             <MenuItem Header="Editar"></MenuItem>
             
         </Menu>
@@ -22,6 +24,7 @@
                  MinHeight="200"
                  MinWidth="300"
                  Grid.Row="1"
+                 AcceptsTab="True"
                  />
 
     </Grid>

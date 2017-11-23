@@ -92,5 +92,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EditorDeTextoCore\EditorDeTextoCore.csproj">
+      <Project>{a6b9349d-d07c-41c9-bc96-18a240518e26}</Project>
+      <Name>EditorDeTextoCore</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
