@@ -25,27 +25,35 @@ namespace EditorDeTextoXaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        
 
-        
 
-        public string Titulo { get { return "Notepad + ou -  "  ; } set { Title = Titulo + value; } }
+
+
+        public string Titulo { get { return "Notepad + ou -  "; } set { Title = Titulo + value; } }
 
 
 
         static public Arquivo ArqAberto = new Arquivo();
 
-        
 
-        
         public MainWindow()
         {
             InitializeComponent();
             Title = Titulo;
             txtTexto.TextChanged += (s, e) => TextoModificado();
             txtTexto.Focus();
+
+            Sair.Click += (s, e) => this.Close();
+            menuDesfazer.Click += (s, e) => txtTexto.Undo();
+            menuColar.Click += (s, e) => txtTexto.Paste();
+            menuCopiar.Click += (s, e) => txtTexto.Copy();
+            menuRecortar.Click += (s, e) => txtTexto.Cut();
+            
+
         }
         
+
+
 
 
 
@@ -58,7 +66,7 @@ namespace EditorDeTextoXaml
 
             if (ArqAberto.Texto == "" && txtTexto.Text == "") Titulo = "";
         }
-        
+
         private void Salvar(object sender, RoutedEventArgs e)
         {
             if (!Arquivo.Existe(ArqAberto))
@@ -70,7 +78,7 @@ namespace EditorDeTextoXaml
             ArqAberto.Salvar();
             TextoModificado();
         }
-        
+
         private static Arquivo Salvar()
         {
             var arquivo = new SaveFileDialog
@@ -79,7 +87,7 @@ namespace EditorDeTextoXaml
                 Title = "Salvar como"
             };
             arquivo.ShowDialog();
-            
+
             var _arq = new Arquivo()
             {
                 Nome = arquivo.SafeFileName,
@@ -87,7 +95,7 @@ namespace EditorDeTextoXaml
             };
             return _arq;
         }
-        
+
         private void SalvarComo(object sender, RoutedEventArgs e)
         {
             ArqAberto = Salvar();
@@ -95,39 +103,64 @@ namespace EditorDeTextoXaml
 
         private void Fechando(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (!string.Equals(ArqAberto.Texto, txtTexto.Text))
+            e.Cancel = Confirmação();
+
+        }
+
+        private bool Confirmação()
+        {
+            if (!ArqAberto.Texto.Equals(txtTexto.Text))
                 switch (MessageBox.Show("Deseja salvar?", "Arquivo não salvo!", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning))
                 {
                     case MessageBoxResult.Yes:
                         Salvar(null, null);
-                        break;
+                        return false;
                     case MessageBoxResult.Cancel:
-                        e.Cancel = true;
-                        break;
+                        return true;
                     default:
-                        break;
+                        return false;
                 }
-                    
-
+            return false;
         }
-        
+
         private void Abrir(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog file = new OpenFileDialog()
+            if (!Confirmação())
             {
-                Filter = "Arquivos de texto|*.txt",
-                Title = "Abrir arquivo"
-            };
 
-            file.ShowDialog();
-            
-            ArqAberto.Abrir(file.FileName, file.SafeFileName);
+                OpenFileDialog file = new OpenFileDialog()
+                {
+                    Filter = "Arquivos de texto|*.txt",
+                    Title = "Abrir arquivo"
+                };
+
+                file.ShowDialog();
+
+                ArqAberto.Abrir(file.FileName, file.SafeFileName);
+
+                Titulo = ArqAberto.Nome;
+                txtTexto.Text = ArqAberto.Texto;
+
+            }
 
 
-            Titulo = ArqAberto.Nome;
-            txtTexto.Text = ArqAberto.Texto;
-        
-        
+
+        }
+
+        private void Novo(object sender, RoutedEventArgs e)
+        {
+            if (!Confirmação())
+            {
+                ArqAberto = new Arquivo();
+                Titulo = ArqAberto.Nome;
+                txtTexto.Text = "";
+            }
+
+        }
+
+        private void Deletar(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -6,7 +6,7 @@ using EditorDeTextoCore;
 namespace EditorDeTexto.Testes
 {
     [TestClass]
-    public class UnitTest1
+    public class ArquivoTeste
     {
         [TestMethod]
         public void Salvar_SalvandoArquivo_ArquivoExiste()
@@ -14,9 +14,7 @@ namespace EditorDeTexto.Testes
             Arquivo file = CriarArquivo();
 
             Assert.IsTrue(Arquivo.Existe(file));
-
-
-
+            
         }
 
         [TestMethod]
@@ -30,6 +28,10 @@ namespace EditorDeTexto.Testes
 
 
         }
+
+        
+
+
 
 
         private static Arquivo CriarArquivo()

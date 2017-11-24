@@ -16,11 +16,24 @@
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header="Arquivo">
+                <MenuItem Header="Novo" Click="Novo"/>
                 <MenuItem Header="Abrir" Click="Abrir"/>
                 <MenuItem Header="Salvar" Click="Salvar"/>
                 <MenuItem Header="Salvar como..." Click="SalvarComo"/>
+                <Separator/>
+                <MenuItem Header="Sair" x:Name="Sair"/>
             </MenuItem>
-            <MenuItem Header="Editar"></MenuItem>
+            <MenuItem Header="Editar">
+                <MenuItem Header="Desfazer" x:Name="menuDesfazer"/>
+                <Separator/>
+                <MenuItem Header="Copiar" x:Name="menuCopiar"/>
+                <MenuItem Header="Colar" x:Name="menuColar"/>
+                <MenuItem Header="Recortar" x:Name="menuRecortar"/>
+                <MenuItem Header="Deletar" Click="Deletar"/>
+                <Separator/>
+                
+
+            </MenuItem>
 
         </Menu>
 
