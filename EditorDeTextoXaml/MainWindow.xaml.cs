@@ -126,7 +126,6 @@ namespace EditorDeTextoXaml
 
             Titulo = ArqAberto.Nome;
             txtTexto.Text = ArqAberto.Texto;
-
         
         
         }
