@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EditorDeTextoXaml"
         mc:Ignorable="d"
-         SizeToContent="WidthAndHeight">
+        Closing="Fechando"
+         SizeToContent="WidthAndHeight"
+        MaxWidth="1000"
+        MaxHeight="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -13,19 +16,24 @@
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header="Arquivo">
+                <MenuItem Header="Abrir" Click="Abrir"/>
                 <MenuItem Header="Salvar" Click="Salvar"/>
+                <MenuItem Header="Salvar como..." Click="SalvarComo"/>
             </MenuItem>
             <MenuItem Header="Editar"></MenuItem>
-            
+
         </Menu>
 
-        <TextBox AcceptsReturn="True" 
-                 x:Name="txtTexto"
-                 MinHeight="200"
-                 MinWidth="300"
-                 Grid.Row="1"
-                 AcceptsTab="True"
-                 />
+
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Auto" 
+                      MinHeight="300"
+                      MinWidth="400">
+            <TextBox AcceptsReturn="True" 
+                     x:Name="txtTexto"
+                     AcceptsTab="True"/>
+        </ScrollViewer>
 
     </Grid>
 </Window>

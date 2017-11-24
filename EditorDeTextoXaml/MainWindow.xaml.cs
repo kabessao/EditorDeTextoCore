@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Bibliotecas
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,8 @@ using System.Windows.Shapes;
 using EditorDeTextoCore;
 using Microsoft.Win32;
 
+
+
 namespace EditorDeTextoXaml
 {
     /// <summary>
@@ -22,43 +25,110 @@ namespace EditorDeTextoXaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string _CostTitulo = "Notepad + ou -";
+        
 
-        delegate void delegado();
+        
 
-        event delegado ArquivoModificado;
+        public string Titulo { get { return "Notepad + ou -  "  ; } set { Title = Titulo + value; } }
 
 
-        Arquivo arq = new Arquivo();
+
+        static public Arquivo ArqAberto = new Arquivo();
+
+        
+
+        
         public MainWindow()
         {
             InitializeComponent();
-            Title = _CostTitulo;
+            Title = Titulo;
             txtTexto.TextChanged += (s, e) => TextoModificado();
+            txtTexto.Focus();
         }
+        
+
+
 
         private void TextoModificado()
         {
-            if (!txtTexto.Text.Equals(arq.Texto))
-                Title = _CostTitulo + "*" + arq.Nome;
+            if (!txtTexto.Text.Equals(ArqAberto.Texto))
+                Titulo = "*" + ArqAberto.Nome;
             else
-                Title = _CostTitulo + arq.Nome;
-        }
+                Titulo = ArqAberto.Nome;
 
+            if (ArqAberto.Texto == "" && txtTexto.Text == "") Titulo = "";
+        }
+        
         private void Salvar(object sender, RoutedEventArgs e)
         {
-            if (!Arquivo.Existe(arq))
+            if (!Arquivo.Existe(ArqAberto))
             {
-                var arquivo = new SaveFileDialog();
-                arquivo.Filter = "Arquivos de texto|*.txt";
-                arquivo.ShowDialog();
-                arq.Nome = arquivo.SafeFileName;
-                arq.Diretorio = arquivo.InitialDirectory;
-                
+                ArqAberto = Salvar();
+
             }
-            arq.Texto = txtTexto.Text;
-            arq.Salvar();
+            ArqAberto.Texto = txtTexto.Text;
+            ArqAberto.Salvar();
             TextoModificado();
+        }
+        
+        private static Arquivo Salvar()
+        {
+            var arquivo = new SaveFileDialog
+            {
+                Filter = "Arquivos de texto|*.txt",
+                Title = "Salvar como"
+            };
+            arquivo.ShowDialog();
+            
+            var _arq = new Arquivo()
+            {
+                Nome = arquivo.SafeFileName,
+                DiretorioCompleto = arquivo.FileName
+            };
+            return _arq;
+        }
+        
+        private void SalvarComo(object sender, RoutedEventArgs e)
+        {
+            ArqAberto = Salvar();
+        }
+
+        private void Fechando(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!string.Equals(ArqAberto.Texto, txtTexto.Text))
+                switch (MessageBox.Show("Deseja salvar?", "Arquivo não salvo!", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning))
+                {
+                    case MessageBoxResult.Yes:
+                        Salvar(null, null);
+                        break;
+                    case MessageBoxResult.Cancel:
+                        e.Cancel = true;
+                        break;
+                    default:
+                        break;
+                }
+                    
+
+        }
+        
+        private void Abrir(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog file = new OpenFileDialog()
+            {
+                Filter = "Arquivos de texto|*.txt",
+                Title = "Abrir arquivo"
+            };
+
+            file.ShowDialog();
+            
+            ArqAberto.Abrir(file.FileName, file.SafeFileName);
+
+
+            Titulo = ArqAberto.Nome;
+            txtTexto.Text = ArqAberto.Texto;
+
+        
+        
         }
     }
 }

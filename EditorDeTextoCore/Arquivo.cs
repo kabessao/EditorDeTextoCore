@@ -10,13 +10,15 @@ namespace EditorDeTextoCore
 {
     public class Arquivo
     {
+        // Propriedades
+
         public string Nome { get; set; } = "[sem nome]";
-        public string Diretorio { get; set; }
-        public bool Salvo { get; set; }
-        public string DiretorioCompleto { get {return Diretorio + Nome; } }
-        public string  Texto { get; set; }
+        public string DiretorioCompleto { get; set; }
+        public string Texto { get; set; } = "";
 
+        
 
+        
         public void Salvar()
         {
             var teste = File.Create(DiretorioCompleto);
@@ -26,11 +28,34 @@ namespace EditorDeTextoCore
             escrever.Close();
         }
 
+        
+
+        // Existe
         public static bool Existe (Arquivo arquivo)
         {
             return File.Exists(arquivo.DiretorioCompleto);
         }
 
-       
+
+        
+
+        // Abrir
+
+        public void Abrir (string diretorioCompleto, string nome)
+        {
+            if (!File.Exists(diretorioCompleto))
+                throw new FileNotFoundException();
+
+
+            var file = new StreamReader(diretorioCompleto);
+            this.Nome = nome;
+            this.DiretorioCompleto = diretorioCompleto;
+            this.Texto = file.ReadToEnd();
+            file.Close();
+            
+        }
+
+        
+
     }
 }
