@@ -6,9 +6,8 @@
         xmlns:local="clr-namespace:EditorDeTextoXaml"
         mc:Ignorable="d"
         Closing="Fechando"
-         SizeToContent="WidthAndHeight"
-        MaxWidth="1000"
-        MaxHeight="600">
+        SizeToContent="WidthAndHeight"
+        >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -29,9 +28,10 @@
                 <MenuItem Header="Copiar" x:Name="menuCopiar"/>
                 <MenuItem Header="Colar" x:Name="menuColar"/>
                 <MenuItem Header="Recortar" x:Name="menuRecortar"/>
-                <MenuItem Header="Deletar" Click="Deletar"/>
+                <MenuItem Header="Deletar" Click="Deletar" x:Name="menuDeletar"/>
                 <Separator/>
-                
+                <MenuItem Header="Procurar" x:Name="MenuProcurar"/>
+
 
             </MenuItem>
 

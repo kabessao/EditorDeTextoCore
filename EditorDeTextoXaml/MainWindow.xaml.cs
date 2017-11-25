@@ -1,5 +1,4 @@
-﻿// Bibliotecas
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,20 +24,10 @@ namespace EditorDeTextoXaml
     /// </summary>
     public partial class MainWindow : Window
     {
-
-
-
-
-        public string Titulo { get { return "Notepad + ou -  "; } set { Title = Titulo + value; } }
-
-
-
-        static public Arquivo ArqAberto = new Arquivo();
-
-
         public MainWindow()
         {
             InitializeComponent();
+
             Title = Titulo;
             txtTexto.TextChanged += (s, e) => TextoModificado();
             txtTexto.Focus();
@@ -48,14 +37,28 @@ namespace EditorDeTextoXaml
             menuColar.Click += (s, e) => txtTexto.Paste();
             menuCopiar.Click += (s, e) => txtTexto.Copy();
             menuRecortar.Click += (s, e) => txtTexto.Cut();
+            AtivarMenus(false);
             
+            txtTexto.SelectionChanged += (s, e) =>
+            {
+                AtivarMenus(txtTexto.SelectedText.Length > 0);
+            };
 
+            
         }
-        
 
 
+        public string Titulo { get { return "Notepad + ou -  "; } set { Title = Titulo + value; } }
+
+        static public Arquivo ArqAberto = new Arquivo();
 
 
+        private void AtivarMenus(bool ativar)
+        {
+            menuCopiar.IsEnabled = ativar;
+            menuRecortar.IsEnabled = ativar;
+            menuDeletar.IsEnabled = ativar;
+        }
 
         private void TextoModificado()
         {
@@ -65,6 +68,8 @@ namespace EditorDeTextoXaml
                 Titulo = ArqAberto.Nome;
 
             if (ArqAberto.Texto == "" && txtTexto.Text == "") Titulo = "";
+
+            
         }
 
         private void Salvar(object sender, RoutedEventArgs e)
@@ -160,7 +165,9 @@ namespace EditorDeTextoXaml
 
         private void Deletar(object sender, RoutedEventArgs e)
         {
-
+            throw new NotImplementedException();
+            txtTexto.Text.Remove(txtTexto.SelectionStart, txtTexto.SelectionStart + txtTexto.SelectionLength);
+            
         }
     }
 }
