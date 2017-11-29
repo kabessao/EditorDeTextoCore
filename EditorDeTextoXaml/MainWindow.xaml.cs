@@ -14,8 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using EditorDeTextoCore;
 using Microsoft.Win32;
-
-
+using System.Windows.Threading;
 
 namespace EditorDeTextoXaml
 {
@@ -27,6 +26,16 @@ namespace EditorDeTextoXaml
         public MainWindow()
         {
             InitializeComponent();
+
+
+            Relogio();
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Start();
+            timer.Tick += (s, e) => Relogio();
+
+            txtRelogio.MouseDoubleClick += (s, e) => EscreverDataHora();
+
 
             Title = Titulo;
             txtTexto.TextChanged += (s, e) => TextoModificado();
@@ -41,7 +50,7 @@ namespace EditorDeTextoXaml
             menuCopiar.Click += (s, e) => txtTexto.Copy();
             menuRecortar.Click += (s, e) => txtTexto.Cut();
             MenuProcurar.Click += (s, e) => new Procurar(Getter).Show();
-            menuHoraData.Click += (s, e) => { txtTexto.Text += "\n" + $"<{DateTime.Now.ToString()}>"; txtTexto.Select(txtTexto.Text.Length, 0); };
+            menuHoraData.Click += (s, e) => EscreverDataHora();
             menuSelecionar.Click += (s, e) => txtTexto.SelectAll();
 
 
@@ -55,6 +64,18 @@ namespace EditorDeTextoXaml
 
             
         }
+
+        private void EscreverDataHora()
+        {
+            txtTexto.Text += "\n" + $"<{DateTime.Now.ToString()}>"; txtTexto.Select(txtTexto.Text.Length, 0);
+        }
+
+        public void Relogio()
+        {
+            txtRelogio.Content = DateTime.Now.ToString();
+        }
+
+
 
         public TextBox Getter() => txtTexto;
 

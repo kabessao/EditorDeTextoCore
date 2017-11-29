@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header="Arquivo">
@@ -51,5 +52,13 @@
                      AcceptsTab="True"/>
         </ScrollViewer>
 
+        <StackPanel Grid.Row="2">
+            <Label x:Name="txtRelogio"
+                   HorizontalAlignment="Right"
+                   Content="Algo deu errado!"
+                   Padding="-1"/>
+        </StackPanel>
+        
+        
     </Grid>
 </Window>
