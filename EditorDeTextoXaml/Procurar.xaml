@@ -5,8 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EditorDeTextoXaml"
         mc:Ignorable="d"
-        Title="Procurar" Height="300" Width="300">
-    <Grid>
+        ResizeMode="NoResize"
+        Title="Procurar" SizeToContent="Height" Width="300">
+    <StackPanel Margin="5">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Procurar:"/>
+                    <TextBox Grid.Column="1" x:Name="txtProcurar"/>
+                </Grid>
+
+            </StackPanel>
+            
+            
+            
+
+            <StackPanel Grid.Column="1"
+                        Grid.RowSpan="2">
+                
+                
+                <Button Content="Procurar" 
+                        Margin="5 0 0 5"
+                        Click="Proximo"/>
+                <Button Content="Cancelar" x:Name="btnCancelar"
+                        Margin="5 0 0 0"/>
+            </StackPanel>
+
+
+        </Grid>
         
-    </Grid>
+        
+    </StackPanel>
 </Window>

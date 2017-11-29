@@ -32,11 +32,20 @@ namespace EditorDeTextoXaml
             txtTexto.TextChanged += (s, e) => TextoModificado();
             txtTexto.Focus();
 
+
+            
+
             Sair.Click += (s, e) => this.Close();
             menuDesfazer.Click += (s, e) => txtTexto.Undo();
             menuColar.Click += (s, e) => txtTexto.Paste();
             menuCopiar.Click += (s, e) => txtTexto.Copy();
             menuRecortar.Click += (s, e) => txtTexto.Cut();
+            MenuProcurar.Click += (s, e) => new Procurar(Getter).Show();
+            menuHoraData.Click += (s, e) => { txtTexto.Text += "\n" + $"<{DateTime.Now.ToString()}>"; txtTexto.Select(txtTexto.Text.Length, 0); };
+            menuSelecionar.Click += (s, e) => txtTexto.SelectAll();
+
+
+
             AtivarMenus(false);
             
             txtTexto.SelectionChanged += (s, e) =>
@@ -46,6 +55,8 @@ namespace EditorDeTextoXaml
 
             
         }
+
+        public TextBox Getter() => txtTexto;
 
 
         public string Titulo { get { return "Notepad + ou -  "; } set { Title = Titulo + value; } }
@@ -165,8 +176,8 @@ namespace EditorDeTextoXaml
 
         private void Deletar(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
-            txtTexto.Text.Remove(txtTexto.SelectionStart, txtTexto.SelectionStart + txtTexto.SelectionLength);
+            //return;
+            txtTexto.Text = txtTexto.Text.Remove(txtTexto.SelectionStart, txtTexto.SelectionLength);
             
         }
     }

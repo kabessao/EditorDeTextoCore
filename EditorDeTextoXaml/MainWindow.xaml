@@ -31,6 +31,9 @@
                 <MenuItem Header="Deletar" Click="Deletar" x:Name="menuDeletar"/>
                 <Separator/>
                 <MenuItem Header="Procurar" x:Name="MenuProcurar"/>
+                <Separator/>
+                <MenuItem Header="Selecionar tudo" x:Name="menuSelecionar"/>
+                <MenuItem Header="Hora/data" x:Name="menuHoraData"/>
 
 
             </MenuItem>
