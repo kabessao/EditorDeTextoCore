@@ -38,6 +38,7 @@
 
 
             </MenuItem>
+            <MenuItem Header="Sobre" x:Name="MenuSobre"/>
 
         </Menu>
 

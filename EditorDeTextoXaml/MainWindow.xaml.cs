@@ -42,7 +42,7 @@ namespace EditorDeTextoXaml
             txtTexto.Focus();
 
 
-            
+
 
             Sair.Click += (s, e) => this.Close();
             menuDesfazer.Click += (s, e) => txtTexto.Undo();
@@ -52,22 +52,27 @@ namespace EditorDeTextoXaml
             MenuProcurar.Click += (s, e) => new Procurar(Getter).Show();
             menuHoraData.Click += (s, e) => EscreverDataHora();
             menuSelecionar.Click += (s, e) => txtTexto.SelectAll();
-
+            MenuSobre.Click += (s, e) => new Sobre().Show();
 
 
             AtivarMenus(false);
-            
+
             txtTexto.SelectionChanged += (s, e) =>
             {
                 AtivarMenus(txtTexto.SelectedText.Length > 0);
             };
 
-            
+
         }
 
         private void EscreverDataHora()
         {
-            txtTexto.Text += "\n" + $"<{DateTime.Now.ToString()}>"; txtTexto.Select(txtTexto.Text.Length, 0);
+            if (!String.IsNullOrEmpty(txtTexto.Text))
+                txtTexto.Text += "\n" + $"<{DateTime.Now.ToString()}>\n";
+            else
+                txtTexto.Text = $"<{DateTime.Now.ToString()}>\n";
+
+            txtTexto.Select(txtTexto.Text.Length, 0);
         }
 
         public void Relogio()
@@ -101,7 +106,7 @@ namespace EditorDeTextoXaml
 
             if (ArqAberto.Texto == "" && txtTexto.Text == "") Titulo = "";
 
-            
+
         }
 
         private void Salvar(object sender, RoutedEventArgs e)
@@ -199,7 +204,7 @@ namespace EditorDeTextoXaml
         {
             //return;
             txtTexto.Text = txtTexto.Text.Remove(txtTexto.SelectionStart, txtTexto.SelectionLength);
-            
+
         }
     }
 }
